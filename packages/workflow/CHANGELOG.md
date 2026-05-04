@@ -1,5 +1,25 @@
 # workflow
 
+## 5.0.0-beta.5
+
+### Patch Changes
+
+- [#1338](https://github.com/vercel/workflow/pull/1338) [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a) Thanks [@VaguelySerious](https://github.com/VaguelySerious)! - Merge flow and step routes into a single combined handler that executes steps inline when possible, reducing function invocations and queue overhead.
+
+- Updated dependencies [[`e7ea068`](https://github.com/vercel/workflow/commit/e7ea0684f44b3743dbc56543ea103786ab7144bc), [`74b13cd`](https://github.com/vercel/workflow/commit/74b13cd3ed3412d4e99af55587c69dc458fa5400), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`00a011d`](https://github.com/vercel/workflow/commit/00a011dee43b3ba7c399a97b9ed072cf4ce66816), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`5f22832`](https://github.com/vercel/workflow/commit/5f228326757f7da349edfed89845bd109c98f104), [`9f3516e`](https://github.com/vercel/workflow/commit/9f3516ec28f15d8bb5bfa9ee57aed858301fa4fd), [`6dd5c72`](https://github.com/vercel/workflow/commit/6dd5c72d8acd1377670da1b4a24abd6f3bea2f61), [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a)]:
+  - @workflow/core@5.0.0-beta.5
+  - @workflow/errors@5.0.0-beta.2
+  - @workflow/utils@5.0.0-beta.2
+  - @workflow/next@5.0.0-beta.5
+  - @workflow/nitro@5.0.0-beta.5
+  - @workflow/nest@5.0.0-beta.5
+  - @workflow/sveltekit@5.0.0-beta.5
+  - @workflow/astro@5.0.0-beta.5
+  - @workflow/cli@5.0.0-beta.5
+  - @workflow/rollup@5.0.0-beta.5
+  - @workflow/typescript-plugin@5.0.0-beta.3
+  - @workflow/nuxt@5.0.0-beta.5
+
 ## 5.0.0-beta.4
 
 ### Patch Changes

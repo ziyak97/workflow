@@ -1,5 +1,36 @@
 # @workflow/core
 
+## 5.0.0-beta.5
+
+### Major Changes
+
+- [#1851](https://github.com/vercel/workflow/pull/1851) [`5f22832`](https://github.com/vercel/workflow/commit/5f228326757f7da349edfed89845bd109c98f104) Thanks [@TooTallNate](https://github.com/TooTallNate)! - **BREAKING CHANGE**: Run and step errors are now serialized through the workflow serialization pipeline, preserving original class identity and cause chains on `WorkflowRunFailedError.cause`. Pre-upgrade failed runs in the `world-postgres` legacy `error` text column surface as `error: undefined` on read; the original payload is still readable directly from the `errorJson` column for manual inspection.
+
+### Minor Changes
+
+- [#1511](https://github.com/vercel/workflow/pull/1511) [`e7ea068`](https://github.com/vercel/workflow/commit/e7ea0684f44b3743dbc56543ea103786ab7144bc) Thanks [@TooTallNate](https://github.com/TooTallNate)! - Add first-class serialization support for built-in Error subclasses (`TypeError`, `RangeError`, `SyntaxError`, `URIError`, `ReferenceError`, `EvalError`, `AggregateError`) and preserve the `cause` property on all Error types
+
+- [#1513](https://github.com/vercel/workflow/pull/1513) [`74b13cd`](https://github.com/vercel/workflow/commit/74b13cd3ed3412d4e99af55587c69dc458fa5400) Thanks [@TooTallNate](https://github.com/TooTallNate)! - Add first-class serialization for `FatalError` and `RetryableError` so they round-trip with class identity preserved across all serialization boundaries (including from environments that don't run the SWC plugin)
+
+### Patch Changes
+
+- [#1849](https://github.com/vercel/workflow/pull/1849) [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd) Thanks [@pranaygp](https://github.com/pranaygp)! - Friendlier workflow error messages. New `SerializationError`, `WorkflowBuildError`, and structured context-violation classes (e.g. `NotInWorkflowContextError`) with actionable hints and docs links applied to user-facing throw sites; `FatalError.is()` recognizes any error with `fatal: true` so context violations and serialization failures now fail fast instead of burning retry attempts. Runtime logs are namespaced under `[workflow-sdk]` and gain `errorAttribution` (`user` vs `sdk`) plus class-aware hints
+
+- [#1747](https://github.com/vercel/workflow/pull/1747) [`00a011d`](https://github.com/vercel/workflow/commit/00a011dee43b3ba7c399a97b9ed072cf4ce66816) Thanks [@ijjk](https://github.com/ijjk)! - Fix eager Next.js workflow builds with lazy discovery disabled.
+
+- [#1849](https://github.com/vercel/workflow/pull/1849) [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd) Thanks [@pranaygp](https://github.com/pranaygp)! - Replace `util.inspect`'s default object dump for runtime structured-log metadata with an opinionated, workflow-aware formatter. The runtime logger uses color-coded metadata blocks.
+
+- [#1299](https://github.com/vercel/workflow/pull/1299) [`9f3516e`](https://github.com/vercel/workflow/commit/9f3516ec28f15d8bb5bfa9ee57aed858301fa4fd) Thanks [@TooTallNate](https://github.com/TooTallNate)! - Refactor `serialization.ts` into modular `serialization/` files. No runtime change.
+
+- [#1338](https://github.com/vercel/workflow/pull/1338) [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a) Thanks [@VaguelySerious](https://github.com/VaguelySerious)! - Merge flow and step routes into a single combined handler that executes steps inline when possible, reducing function invocations and queue overhead.
+
+- Updated dependencies [[`92dc826`](https://github.com/vercel/workflow/commit/92dc82608ab7526e930eeedd4752c68872bae639), [`5eb0b79`](https://github.com/vercel/workflow/commit/5eb0b792b8a7f04d6558f27d4b0d29daa57a788d), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`5f22832`](https://github.com/vercel/workflow/commit/5f228326757f7da349edfed89845bd109c98f104), [`2f52d14`](https://github.com/vercel/workflow/commit/2f52d14f3844c999f6b89baeb8e04289d6dd34a9), [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a), [`c1163eb`](https://github.com/vercel/workflow/commit/c1163eb146991a4924d80bcc9cfcc8bb89e05067), [`cd50618`](https://github.com/vercel/workflow/commit/cd50618d1fc01ee6049047e415b794dd7ca54af9)]:
+  - @workflow/world-local@5.0.0-beta.4
+  - @workflow/world-vercel@5.0.0-beta.4
+  - @workflow/errors@5.0.0-beta.2
+  - @workflow/utils@5.0.0-beta.2
+  - @workflow/world@5.0.0-beta.2
+
 ## 5.0.0-beta.4
 
 ## 5.0.0-beta.3

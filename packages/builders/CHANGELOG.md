@@ -1,5 +1,36 @@
 # @workflow/builders
 
+## 5.0.0-beta.5
+
+### Minor Changes
+
+- [#1842](https://github.com/vercel/workflow/pull/1842) [`6dd5c72`](https://github.com/vercel/workflow/commit/6dd5c72d8acd1377670da1b4a24abd6f3bea2f61) Thanks [@VaguelySerious](https://github.com/VaguelySerious)! - Add `sourcemap` option to builders for disabling or customising source map emission on generated workflow bundles. Accepts the same values as esbuild's `sourcemap` option: `true`, `false`, `'inline'`, `'linked'`, `'external'`, `'both'`. Can also be set via the `WORKFLOW_SOURCEMAP` environment variable.
+
+  Setting `sourcemap: false` drops inline source maps from the step, workflow and webhook bundles, and skips the source-map-support runtime shim on the Vercel step function — helpful for staying under the Vercel 250MB function size limit.
+
+  Exposed per framework: `nitro.options.workflow.sourcemap`, `NestBuilderOptions.sourcemap`, `withWorkflow({ workflows: { sourcemap } })`, and the `sourcemap` option on `workflowPlugin()` for SvelteKit and Astro.
+
+  Minor semantics change: when the `sourcemap` option (or `WORKFLOW_SOURCEMAP`) is set explicitly, it now applies to **all** generated bundles. Previously, the final workflow wrapper and webhook bundles could only be toggled via the legacy `WORKFLOW_EMIT_SOURCEMAPS_FOR_DEBUGGING=1` env var, which continues to work but is narrower in scope.
+
+### Patch Changes
+
+- [#1885](https://github.com/vercel/workflow/pull/1885) [`e0ec429`](https://github.com/vercel/workflow/commit/e0ec429bb3baa4b3cb96373149a78dd514ebfe18) Thanks [@TooTallNate](https://github.com/TooTallNate)! - Fix `Package subpath ... is not defined by "exports"` runtime errors when step files reach project-local helpers via tsconfig `paths` / esbuild aliases / self-referencing package names.
+
+  Such helpers are now bundled inline rather than externalized as relative paths. Externalization was unsafe because the helper's source on disk could contain further alias imports, and Node's ESM loader at runtime doesn't know about build-time path mappings — leading to errors like `Package subpath './lib/foo' is not defined by "exports"` (or `ERR_MODULE_NOT_FOUND`) once the helper was loaded.
+
+- [#1849](https://github.com/vercel/workflow/pull/1849) [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd) Thanks [@pranaygp](https://github.com/pranaygp)! - Friendlier workflow error messages. New `SerializationError`, `WorkflowBuildError`, and structured context-violation classes (e.g. `NotInWorkflowContextError`) with actionable hints and docs links applied to user-facing throw sites; `FatalError.is()` recognizes any error with `fatal: true` so context violations and serialization failures now fail fast instead of burning retry attempts. Runtime logs are namespaced under `[workflow-sdk]` and gain `errorAttribution` (`user` vs `sdk`) plus class-aware hints
+
+- [#1747](https://github.com/vercel/workflow/pull/1747) [`00a011d`](https://github.com/vercel/workflow/commit/00a011dee43b3ba7c399a97b9ed072cf4ce66816) Thanks [@ijjk](https://github.com/ijjk)! - Fix eager Next.js workflow builds with lazy discovery disabled.
+
+- [#1821](https://github.com/vercel/workflow/pull/1821) [`7830169`](https://github.com/vercel/workflow/commit/78301695eae3641ec4235d2066eba48f7448c5be) Thanks [@TooTallNate](https://github.com/TooTallNate)! - Fix false-positive `workflow-node-module-error` for step-only Node.js usage in shared modules
+
+- [#1338](https://github.com/vercel/workflow/pull/1338) [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a) Thanks [@VaguelySerious](https://github.com/VaguelySerious)! - Merge flow and step routes into a single combined handler that executes steps inline when possible, reducing function invocations and queue overhead.
+
+- Updated dependencies [[`e7ea068`](https://github.com/vercel/workflow/commit/e7ea0684f44b3743dbc56543ea103786ab7144bc), [`74b13cd`](https://github.com/vercel/workflow/commit/74b13cd3ed3412d4e99af55587c69dc458fa5400), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`00a011d`](https://github.com/vercel/workflow/commit/00a011dee43b3ba7c399a97b9ed072cf4ce66816), [`1203dae`](https://github.com/vercel/workflow/commit/1203dae70c802eef114909e9476e19ec528550cd), [`5f22832`](https://github.com/vercel/workflow/commit/5f228326757f7da349edfed89845bd109c98f104), [`9f3516e`](https://github.com/vercel/workflow/commit/9f3516ec28f15d8bb5bfa9ee57aed858301fa4fd), [`8ea1532`](https://github.com/vercel/workflow/commit/8ea1532e48ed86ef9a66231e474851bed85c737a)]:
+  - @workflow/core@5.0.0-beta.5
+  - @workflow/errors@5.0.0-beta.2
+  - @workflow/utils@5.0.0-beta.2
+
 ## 5.0.0-beta.4
 
 ### Patch Changes
